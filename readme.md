@@ -1,6 +1,6 @@
 # Firebase Auth
+REST client for Firebase authentication.
 
-## REST client for Firebase authentication.
 #### Exposes a ZIO interface. HTTP client is based on Akka Http.
 
 ## Usage
@@ -45,6 +45,3 @@ object Main extends zio.App {
       .exitCode
 }
 ```
-
-## Doggo
-![image](https://user-images.githubusercontent.com/5600005/111153350-235dc780-8592-11eb-99c5-a1649a9f0189.png)
