@@ -1,5 +1,5 @@
 package auth
-import models.{FirebaseConfig, GetUserDataPayload, GetUserDataResponse, SignInPayload, LoggedInResponse, WithEmailAndPassword}
+import models.{FirebaseConfig, GetUserDataPayload, GetUserDataResponse, LoggedInResponse, WithEmailAndPassword}
 import akka.http.scaladsl.model.Uri.Query
 import akka.http.scaladsl.model.Uri
 import client.HttpClient
