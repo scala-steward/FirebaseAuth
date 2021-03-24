@@ -9,7 +9,7 @@ Add the following dependency:
 ```
 libraryDependencies += "io.github.navidjalali" % "firebaseauth" % "0.0.1"
 ```
-You need to provide `ZIO`,
+This library depends on Akka (typed, streams, http), zio and circe.
 ```scala
 import akka.actor.ActorSystem
 import client.HttpClient
