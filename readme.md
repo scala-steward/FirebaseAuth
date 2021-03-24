@@ -14,12 +14,13 @@ This library depends on Akka (typed, streams, http), zio and circe.
 import akka.actor.ActorSystem
 import client.HttpClient
 import auth.FirebaseAuth
+import models.FirebaseConfig
 import zio.console.{Console, putStrLn}
 import zio.{ExitCode, Managed, Task, URIO, ZIO, ZLayer}
 
 object Main extends zio.App {
 
-  val secret = "such secret read from config"
+  val config = ZLayer.succeed(FirebaseConfig("such secret"))
 
   val email = "suchemail@suchdomain.wow"
   val password = "such secure password"
@@ -28,8 +29,8 @@ object Main extends zio.App {
     Console.live and
       ZLayer.fromManaged(Managed.make(Task(ActorSystem("system")))(sys =>
         Task.fromFuture(_ => sys.terminate()).either)) >>>
-        HttpClient.live >>>
-        FirebaseAuth.live(secret)
+        (config and HttpClient.live) >>>
+        FirebaseAuth.live
 
   val app: ZIO[Console with FirebaseAuth, FirebaseAuth.AuthError, Unit] = for {
     auth <- ZIO.access[FirebaseAuth](_.get)

@@ -1,19 +1,19 @@
 package auth
-import models.{GetUserDataPayload, GetUserDataResponse, SignInPayload, SignInResponse}
-
+import models.{FirebaseConfig, GetUserDataPayload, GetUserDataResponse, SignInPayload, SignInResponse}
 import akka.http.scaladsl.model.Uri.Query
 import akka.http.scaladsl.model.Uri
 import client.HttpClient
-
-import zio.{IO, ZLayer}
+import zio.{Has, IO, ZLayer}
 
 object FirebaseAuth {
 
-  def live(secret: String): ZLayer[HttpClient, Nothing, FirebaseAuth] =
-    ZLayer.fromService {
-      http =>
+  val live: ZLayer[Has[FirebaseConfig] with HttpClient, Nothing, FirebaseAuth] =
+    ZLayer.fromServices[FirebaseConfig, HttpClient.Service, Service] {
+      (config, http) =>
         new Service {
           import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+
+          val secret: String = config.secret
 
           val identityToolkit: Uri = "https://identitytoolkit.googleapis.com/v1/"
 
