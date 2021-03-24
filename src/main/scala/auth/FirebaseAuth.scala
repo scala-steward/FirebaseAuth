@@ -1,5 +1,5 @@
 package auth
-import models.{FirebaseConfig, GetUserDataPayload, GetUserDataResponse, SignInPayload, SignInResponse}
+import models.{FirebaseConfig, GetUserDataPayload, GetUserDataResponse, SignInPayload, LoggedInResponse, WithEmailAndPassword}
 import akka.http.scaladsl.model.Uri.Query
 import akka.http.scaladsl.model.Uri
 import client.HttpClient
@@ -23,16 +23,23 @@ object FirebaseAuth {
             ).mapError(HttpError)
           }
 
-          override def signIn(email: String, password: String): IO[AuthError, SignInResponse] = {
-            http.post[SignInPayload, SignInResponse](SignInPayload(email, password),
+          override def signIn(email: String, password: String): IO[AuthError, LoggedInResponse] = {
+            http.post[WithEmailAndPassword, LoggedInResponse](WithEmailAndPassword(email, password),
               Uri(s"${identityToolkit}accounts:signInWithPassword").withQuery(Query("key" -> secret))
+            ).mapError(HttpError)
+          }
+
+          override def signUp(email: String, password: String): IO[AuthError, LoggedInResponse] = {
+            http.post[WithEmailAndPassword, LoggedInResponse](WithEmailAndPassword(email, password),
+              Uri(s"${identityToolkit}accounts:signUp").withQuery(Query("key" -> secret))
             ).mapError(HttpError)
           }
         }
     }
   trait Service {
     def getUserData(idToken: String): IO[AuthError, GetUserDataResponse]
-    def signIn(email: String, password: String): IO[AuthError, SignInResponse]
+    def signIn(email: String, password: String): IO[AuthError, LoggedInResponse]
+    def signUp(email: String, password: String): IO[AuthError, LoggedInResponse]
   }
 
   sealed trait AuthError
