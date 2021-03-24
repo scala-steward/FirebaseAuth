@@ -1,13 +1,19 @@
 # Firebase Auth
 
-### REST client for Firebase authentication.
-
+## REST client for Firebase authentication.
 #### Exposes a ZIO interface. HTTP client is based on Akka Http.
 
+## Usage
+Add the following dependency:
+
+```
+libraryDependencies += "io.github.navidjalali" % "firebaseauth" % "0.0.1"
+```
+You need to provide `ZIO`,
 ```scala
 import akka.actor.ActorSystem
-import io.github.navidjalali.auth.client.HttpClient
-import io.github.navidjalali.auth.firebase.FirebaseAuth
+import client.HttpClient
+import auth.FirebaseAuth
 import zio.console.{Console, putStrLn}
 import zio.{ExitCode, Managed, Task, URIO, ZIO, ZLayer}
 

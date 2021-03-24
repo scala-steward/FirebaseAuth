@@ -28,31 +28,17 @@ sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 val AkkaVersion = "2.6.10"
 val zioVersion = "1.0.3"
-val log4jVersion = "2.14.0"
 val AkkaHttpVersion = "10.2.1"
 val circeVersion = "0.12.3"
 
 libraryDependencies ++= Seq(
   "dev.zio" %% "zio" % zioVersion,
-  "dev.zio" %% "zio-streams" % zioVersion,
-  "dev.zio" %% "zio-test"          % zioVersion % "test",
-  "dev.zio" %% "zio-test-sbt"      % zioVersion % "test",
-)
-
-testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
-
-libraryDependencies ++= Seq(
-  "org.apache.logging.log4j" % "log4j-api" % log4jVersion,
-  "org.apache.logging.log4j" % "log4j-core" % log4jVersion,
-  "org.apache.logging.log4j" % "log4j-slf4j-impl" % log4jVersion,
-  "org.apache.logging.log4j" % "log4j-1.2-api" % log4jVersion
 )
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
   "com.typesafe.akka" %% "akka-stream" % AkkaVersion,
   "com.typesafe.akka" %% "akka-http" % AkkaHttpVersion,
-  "com.lightbend.akka" %% "akka-stream-alpakka-slick" % "2.0.2"
 )
 
 libraryDependencies ++= Seq(
