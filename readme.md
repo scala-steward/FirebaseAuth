@@ -7,7 +7,7 @@ REST client for Firebase authentication.
 Add the following dependency:
 
 ```
-libraryDependencies += "io.github.navidjalali" % "firebaseauth" % "0.0.3"
+libraryDependencies += "io.github.navidjalali" % "firebaseauth" % "0.0.4"
 ```
 This library depends on Akka (typed, streams, http), zio and circe.
 ```scala
