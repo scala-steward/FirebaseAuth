@@ -14,12 +14,28 @@ object HttpClient {
   trait Impl extends Service {
     implicit val actorSystem: ActorSystem
 
+    def toFailedResponse(response: HttpResponse): ZIO[Any, HttpError, Nothing] =
+      consumeEntity(response)
+        .flatMap(entity =>
+          IO.fail(ClientError(
+            FailedResponse(
+              response.status,
+              entity,
+              response.headers))))
+
+    def consumeEntity(response: HttpResponse): ZIO[Any, Unexpected, String] =
+      ZIO.fromFuture(_ => response.entity.dataBytes.runFold(ByteString.empty)(_ concat _))
+        .map(_.utf8String)
+        .mapError(Unexpected)
+
     override def request(req: HttpRequest): IO[HttpError, HttpResponse] =
       ZIO.fromFuture(_ => Http().singleRequest(req))
         .mapError(Unexpected)
         .flatMap {
-          case r@HttpResponse(StatusCodes.ClientError(_), _, _, _) => IO.fail(ClientError(r))
-          case r@HttpResponse(StatusCodes.ServerError(_), _, _, _) => IO.fail(ServerError(r))
+          case r @ HttpResponse(StatusCodes.ClientError(_), _, _, _) =>
+            toFailedResponse(r)
+          case r @ HttpResponse(StatusCodes.ServerError(_), _, _, _) =>
+            toFailedResponse(r)
           case other => IO.succeed(other)
         }
 
@@ -36,9 +52,7 @@ object HttpClient {
           )
         )
 
-        unparsed <- ZIO.fromFuture(_ => response.entity.dataBytes.runFold(ByteString.empty)(_ concat _))
-          .map(_.utf8String)
-          .mapError(Unexpected)
+        unparsed <- consumeEntity(response)
 
         result <- ZIO.fromEither(decode[B](unparsed))
           .mapError(ParsingError)
@@ -56,11 +70,13 @@ object HttpClient {
     def post[A, B](payload: A, uri: Uri)(implicit m: Marshaller[A, MessageEntity], d: Decoder[B]): IO[HttpError, B]
   }
 
-  trait HttpError
+  case class FailedResponse(code: StatusCode, entity: String, headers: Seq[HttpHeader])
 
-  case class ClientError(response: HttpResponse) extends HttpError
+  sealed trait HttpError
 
-  case class ServerError(response: HttpResponse) extends HttpError
+  case class ClientError(response: FailedResponse) extends HttpError
+
+  case class ServerError(response: FailedResponse) extends HttpError
 
   case class Unexpected(cause: Throwable) extends HttpError
 

@@ -45,7 +45,4 @@ object FirebaseAuth {
   sealed trait AuthError
 
   case class HttpError(response: HttpClient.HttpError) extends AuthError
-
-  case class Unexpected(cause: Throwable) extends AuthError
-
 }
