@@ -27,7 +27,7 @@ sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 val AkkaVersion = "2.6.10"
-val zioVersion = "1.0.3"
+val zioVersion = "1.0.5"
 val AkkaHttpVersion = "10.2.1"
 val circeVersion = "0.12.3"
 
