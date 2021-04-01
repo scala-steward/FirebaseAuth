@@ -26,10 +26,10 @@ ThisBuild / scmInfo := Some(
 sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
-val AkkaVersion = "2.6.10"
+val AkkaVersion = "2.6.13"
+val AkkaHttpVersion = "10.2.4"
 val zioVersion = "1.0.5"
-val AkkaHttpVersion = "10.2.1"
-val circeVersion = "0.12.3"
+val circeVersion = "0.13.0"
 
 libraryDependencies ++= Seq(
   "dev.zio" %% "zio" % zioVersion,
@@ -48,5 +48,5 @@ libraryDependencies ++= Seq(
 ).map(_ % circeVersion)
 
 libraryDependencies ++= Seq(
-  "de.heikoseeberger" %% "akka-http-circe" % "1.31.0"
+  "de.heikoseeberger" %% "akka-http-circe" % "1.36.0"
 )
