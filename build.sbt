@@ -28,7 +28,7 @@ sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 val AkkaVersion = "2.6.15"
 val AkkaHttpVersion = "10.2.4"
-val zioVersion = "1.0.9"
+val zioVersion = "1.0.10"
 val circeVersion = "0.14.1"
 
 libraryDependencies ++= Seq(
