@@ -51,5 +51,5 @@ libraryDependencies ++= Seq(
 ).map(_ % circeVersion)
 
 libraryDependencies ++= Seq(
-  "de.heikoseeberger" %% "akka-http-circe" % "1.38.2"
+  "de.heikoseeberger" %% "akka-http-circe" % "1.39.2"
 )
