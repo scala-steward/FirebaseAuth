@@ -26,7 +26,7 @@ ThisBuild / scmInfo := Some(
 sonatypeCredentialHost := "s01.oss.sonatype.org"
 sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
-val AkkaVersion = "2.6.17"
+val AkkaVersion = "2.6.20"
 
 val AkkaHttpVersion = "10.2.6"
 
