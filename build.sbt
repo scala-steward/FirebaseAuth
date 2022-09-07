@@ -28,7 +28,7 @@ sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 
 val AkkaVersion = "2.6.17"
 
-val AkkaHttpVersion = "10.2.6"
+val AkkaHttpVersion = "10.2.10"
 
 val zioVersion = "1.0.12"
 
