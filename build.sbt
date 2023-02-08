@@ -30,7 +30,7 @@ val AkkaVersion = "2.6.17"
 
 val AkkaHttpVersion = "10.2.6"
 
-val zioVersion = "1.0.12"
+val zioVersion = "1.0.18"
 
 val circeVersion = "0.14.1"
 
