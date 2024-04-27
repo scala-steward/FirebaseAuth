@@ -32,7 +32,7 @@ val AkkaHttpVersion = "10.2.6"
 
 val zioVersion = "1.0.12"
 
-val circeVersion = "0.14.1"
+val circeVersion = "0.14.7"
 
 libraryDependencies ++= Seq(
   "dev.zio" %% "zio" % zioVersion,
